@@ -11,7 +11,7 @@ const cartStore = useCartStore();
     </a>
     <div class="layer">
       <div class="list">
-        <div class="item" v-for="i in cartStore.cartList" :key="i">
+        <div class="item" v-for="i in cartStore.cartList" :key="i.id">
           <RouterLink to="">
             <img :src="i.picture" alt="" />
             <div class="center">

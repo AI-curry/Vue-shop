@@ -13,13 +13,16 @@ onMounted(() => getNewList());
 </script>
 
 <template>
+  <!--给子组件传props-->
   <HomePanel title="新鲜好物" sub-title="每日推荐 新鲜出炉 品质靠谱">
+    <!--插槽内容-->
     <ul class="goods-list">
       <li v-for="item in newList" :key="item.id">
         <RouterLink :to="`/detail/${item.id}`">
           <img :src="item.picture" alt="" />
           <p class="name">{{ item.name }}</p>
           <p class="price">&yen;{{ item.price }}</p>
+          <!--&yen：人民币符号¥-->
         </RouterLink>
       </li>
     </ul>

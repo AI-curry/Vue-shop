@@ -2,7 +2,9 @@
   <ul class="app-header-nav">
     <li class="home"><RouterLink to="/">首页</RouterLink></li>
     <li class="home" v-for="item in categoryList" :key="item.id">
+      <!--active-class：激活状态控制-->
       <RouterLink active-class="active" :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
+      <!--:to动态拼接路由地址：/category/分类id，每个分类对应专属页面-->
     </li>
   </ul>
 </template>
@@ -11,8 +13,8 @@
 import { useCategoryStore } from '@/stores/categoryStore.ts';
 import { storeToRefs } from 'pinia';
 
-const categoryStore = useCategoryStore();
-const { categoryList } = storeToRefs(categoryStore);
+const categoryStore = useCategoryStore(); //拿到了分类仓库
+const { categoryList } = storeToRefs(categoryStore); //用storeToRefs解构赋值，解构后仍然保持响应式
 </script>
 
 <style scoped lang="scss">

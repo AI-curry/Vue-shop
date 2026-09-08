@@ -19,11 +19,11 @@ const router = createRouter({
   // path和component对应关系的位置
   routes: [
     {
-      path: '/',
+      path: '/', //一级路由
       component: Layout,
       children: [
         {
-          path: '',
+          path: '', //默认二级路由的path配置项置空，这样就会与一级路由一起渲染到页面
           component: Home
         },
         {
@@ -32,7 +32,7 @@ const router = createRouter({
         },
         {
           path: 'category/sub/:id',
-          component: SubCategory
+          component: () => import('@/views/SubCategory/index.vue')
         },
         {
           path: 'detail/:id',
@@ -76,6 +76,7 @@ const router = createRouter({
       component: Login
     }
   ],
+  //路由滚动行为定制
   scrollBehavior() {
     return {
       top: 0

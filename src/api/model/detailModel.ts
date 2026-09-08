@@ -1,4 +1,10 @@
 import { Categories } from '@/api/model/categoryModel.ts';
+export interface Brand {
+  id?: string;
+  name?: string;
+  logo?: string;
+  // 其他品牌可能有的字段，按需补充
+}
 //  商品详情
 export interface GoodDetail {
   id: string;
@@ -9,7 +15,7 @@ export interface GoodDetail {
   oldPrice: string;
   discount: string;
   inventory: string;
-  brand: object;
+  brand: Brand | null;
   salesCount: number;
   commentCount: number;
   collectCount: number;

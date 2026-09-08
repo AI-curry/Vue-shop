@@ -20,7 +20,7 @@ const getCeckInfo = async () => {
 };
 
 const activeAddress = ref(); // 当前选择的地址
-const switchAddress = (address) => {
+const switchAddress = (address: any) => {
   activeAddress.value = address;
 };
 const confirm = () => {
@@ -413,7 +413,7 @@ onMounted(() => getCeckInfo());
     &.active,
     &:hover {
       border-color: $xtxColor;
-      background: lighten($xtxColor, 50%);
+      background: color.adjust($xtxColor, $lightness: 50%);
     }
 
     > ul {

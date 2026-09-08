@@ -1,3 +1,4 @@
+<!--面板组件，提供插槽和支持props传参。可复用-->
 <template>
   <div class="home-panel">
     <div class="container">

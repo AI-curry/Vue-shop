@@ -1,5 +1,8 @@
+<!--吸顶导航交互实现-->
 <template>
+  <!--给该吸顶导航加上动态类:class-->
   <div class="app-header-sticky" :class="{ show: y > 78 }">
+    <!--页面滚动垂直距离y大于78px时，自动加上show类-->
     <div class="container">
       <RouterLink class="logo" to="/" />
       <!-- 导航区域 -->
@@ -15,9 +18,10 @@
 </template>
 
 <script setup lang="ts">
-import { useScroll } from '@vueuse/core';
+import { useScroll } from '@vueuse/core'; //引入useScroll：VueUse提供的滚动监听函数
 import HeaderNav from '@/views/Layout/components/HeaderNav.vue';
-const { y } = useScroll(window);
+//解构出响应式变量y，实时等于页面纵向滚动距离（单位：px）
+const { y } = useScroll(window); //传入window代表监听整个页面滚动
 </script>
 
 <style scoped lang="scss">

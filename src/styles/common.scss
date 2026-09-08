@@ -11,9 +11,8 @@ body {
   height: 100%;
   color: #333;
   min-width: 1240px;
-  font: 1em/1.4 'Microsoft Yahei', 'PingFang SC', 'Avenir', 'Segoe UI',
-    'Hiragino Sans GB', 'STHeiti', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei',
-    sans-serif;
+  font: 1em/1.4 'Microsoft Yahei', 'PingFang SC', 'Avenir', 'Segoe UI', 'Hiragino Sans GB', 'STHeiti',
+    'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
 }
 body,
 ul,
@@ -42,6 +41,7 @@ input[type='checkbox'] {
   outline: none;
   border: none;
   -webkit-appearance: none;
+  appearance: none; // 新增标准属性，消除提示警告
   &::placeholder {
     color: #ccc;
   }
@@ -78,6 +78,7 @@ ul {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2; // 新增W3C标准属性，消除IDE警告
   overflow: hidden;
 }
 

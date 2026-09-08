@@ -2,8 +2,11 @@
   <div class="home-category">
     <ul class="menu">
       <li v-for="item in categoryList" :key="item.id">
+        <!--渲染一级分类-->
         <RouterLink to="/">{{ item.name }}</RouterLink>
+        <!--渲染二级分类-->
         <RouterLink v-for="child in item.children.slice(0, 2)" :key="child.id" to="/">{{ child.name }}</RouterLink>
+
         <!-- 弹层layer位置 -->
         <div class="layer">
           <h4>
@@ -12,6 +15,7 @@
           </h4>
           <ul>
             <li v-for="good in item.goods" :key="good.id">
+              <!--动态路由：把当前商品 id 拼接进路由地址，点击跳对应商品详情页面-->
               <RouterLink :to="`/detail/${good.id}`">
                 <img alt="" :src="good.picture" />
                 <div class="info">
@@ -19,6 +23,7 @@
                   <p class="desc ellipsis">{{ good.desc }}</p>
                   <p class="price">
                     <i>¥</i>
+                    <!--斜体文字标签-->
                     {{ good.price }}
                   </p>
                 </div>
@@ -73,7 +78,7 @@ const { categoryList } = storeToRefs(categoryStore);
         position: absolute;
         left: 250px;
         top: 0;
-        display: none;
+        display: none; /*默认隐藏*/
         padding: 0 15px;
 
         h4 {

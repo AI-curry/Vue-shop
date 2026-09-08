@@ -1,4 +1,5 @@
 <script setup lang="ts">
+//定义props：父组件传入good对象，类型为Good_Pt
 defineProps<{
   good: Good_Pt;
 }>();

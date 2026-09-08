@@ -4,15 +4,15 @@ import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import 'element-plus/theme-chalk/el-message.css';
 import { useUserStore } from '@/stores/userStore.ts';
-
+import type { ElForm } from 'element-plus';
 const userStore = useUserStore();
-// 登录表单对象
+//1.按照后端文档给的接口字段来准备表单对象
 const form = ref({
   account: '',
   password: '',
   agree: true
 });
-//  准备规则对象
+//2.准备规则对象
 const rules = {
   account: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
   password: [
@@ -21,12 +21,16 @@ const rules = {
   ],
   agree: [
     {
-      validator: (rule, value, callback) => {
-        // 自定义校验
+      // 自定义校验
+      //value：当前输入的数据
+      //callback：校验处理函数，校验通过时调用
+      validator: (rule: any, value: boolean, callback: (error?: Error) => void) => {
         // 勾选通过，不勾选就不通过
         if (value) {
+          //通过校验就调一下
           callback();
         } else {
+          //不通过校验就new一个Error
           callback(new Error('请勾选协议'));
         }
       }
@@ -34,13 +38,18 @@ const rules = {
   ]
 };
 
-const formRef = ref(null);
+const formRef = ref<InstanceType<typeof ElForm> | null>(null);
 const router = useRouter();
 
+//统一校验
+//formRef.value里面存的就是<el-form>组件对象，而.validate()就是组件自带的表单校验方法。
 const doLogin = () => {
   const { account, password } = form.value;
-  formRef.value.validate(async (vaild) => {
-    if (vaild) {
+  if (!formRef.value) return; // 组件实例不存在直接返回
+  formRef.value.validate(async (valid) => {
+    //valid:所有表单都通过校验，才为true
+    if (valid) {
+      //执行pinia里面存的异步函数
       await userStore.getUserInfo({ account, password });
       // 1. 提示用户
       ElMessage({ type: 'success', message: '登录成功' });
@@ -72,6 +81,7 @@ const doLogin = () => {
         </nav>
         <div class="account-box">
           <div class="form">
+            <!--表单容器组件-->
             <el-form :model="form" :rules="rules" label-position="right" label-width="60px" status-icon ref="formRef">
               <el-form-item prop="account" label="账户">
                 <el-input v-model="form.account" />

@@ -1,28 +1,28 @@
 <script setup lang="ts">
+//引入路由钩子onBeforeRouteUpdate：只有路由参数变化但页面复用时触发该路由钩子，用于重新发送接口请求新的数据
 import { onBeforeRouteUpdate } from 'vue-router';
 import GoodsItem from '@/views/Home/components/GoodsItem.vue';
 import { useBanner } from '@/views/Category/composables/useBanner.ts';
 import { useCategory } from '@/views/Category/composables/useCategory.ts';
 
 // 获取页面数据
-const { categoryData, getCategory } = useCategory();
+const { categoryData } = useCategory();
 // 获取轮播图
 const { bannerList } = useBanner();
-
-onBeforeRouteUpdate((to) => getCategory(to.params.id as string));
 </script>
 
 <template>
   <div class="top-category">
     <div class="container m-top-20">
-      <!-- 面包屑 -->
+      <!-- 面包屑导航 -->
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
           <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
+          <!--渲染面包屑导航-->
         </el-breadcrumb>
       </div>
-      <!-- 轮播图-->
+      <!-- 分类页的轮播图-->
       <div class="home-banner">
         <el-carousel height="500px">
           <el-carousel-item v-for="item in bannerList" :key="item.id">
@@ -35,6 +35,7 @@ onBeforeRouteUpdate((to) => getCategory(to.params.id as string));
         <h3>全部分类</h3>
         <ul>
           <li v-for="item in categoryData.children" :key="item.id">
+            <!--跳转到二级分类的路由-->
             <RouterLink :to="`/category/sub/${item.id}`">
               <img v-img-lazy="item.picture" />
               <p>{{ item.name }}</p>
@@ -42,11 +43,13 @@ onBeforeRouteUpdate((to) => getCategory(to.params.id as string));
           </li>
         </ul>
       </div>
+      <!--各个分类详情-->
       <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
         <div class="head">
           <h3>- {{ item.name }}-</h3>
         </div>
         <div class="body">
+          <!--使用封装好的组件-->
           <GoodsItem v-for="good in item.goods" :good="good" :key="good.id" />
         </div>
       </div>

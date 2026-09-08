@@ -4,11 +4,13 @@ import { useRoute } from 'vue-router';
 import { computed, onMounted, ref } from 'vue';
 import { HotGoodsRequest } from '@/api/model/detailModel.ts';
 
+//设计props参数，适配不同的title和数据
 const props = defineProps<{
   type: number;
 }>();
 
-const TYPEMAP = {
+//根据不同的参数渲染不同的title
+const TYPEMAP: { [key: number]: string; 1: string; 2: string } = {
   1: '24小时热销榜',
   2: '周热销榜'
 };
@@ -17,10 +19,11 @@ const title = computed(() => TYPEMAP[props.type]);
 const hotList = ref([] as Good[]);
 
 const route = useRoute();
+//获取热榜数据
 const getHotList = async () => {
   const res = await getHotGoodsAPI({
     id: route.params.id,
-    type: props.type
+    type: props.type //根据传入的参数获取不同的热榜数据
   } as HotGoodsRequest);
   hotList.value = res.result;
 };
